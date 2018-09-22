@@ -27,3 +27,4 @@ public class PojoToJsonStringSerializer{
         return string;
     }
 }
+

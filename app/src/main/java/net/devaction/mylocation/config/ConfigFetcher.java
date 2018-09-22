@@ -49,3 +49,4 @@ public class ConfigFetcher{
         Log.d(ConfigFetcher.class.getSimpleName(), "Configuration data has just been read from file: " + CONFIG_DATA);
     }
 }
+

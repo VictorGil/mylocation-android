@@ -1,6 +1,5 @@
 package net.devaction.mylocation;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,8 +12,6 @@ import net.devaction.mylocation.config.ConfigFetcher;
 import net.devaction.mylocation.db.LocationServiceController;
 import net.devaction.mylocation.listeners.FloatingActionButtonOnClickListener;
 import net.devaction.mylocation.processors.LocationDataProcessor;
-
-import java.io.InputStream;
 
 /**
  * @author Víctor Gil
