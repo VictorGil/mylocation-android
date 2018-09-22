@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Mylocation</string>
+    <string name="action_settings">Settings</string>
+    <string name="enabling_service">Enabling location service</string>
+    <string name="disabling_service">Disabling location service</string>
+    <string name="service_has_been_disabled">Location service has been disabled</string>
+    <string name="service_has_been_enabled">Location service has been enabled</string>
+    <string name="service_is_enabled">Location service is enabled</string>
+    <string name="service_is_disabled">Location service is disabled</string>
+    <string name="could_not_read_config_file">FATAL ERROR: Could not read config file</string>
+    <string name="url_missing">FATAL ERROR: The value of the remote URL is not set in the configuration</string>
+</resources>
