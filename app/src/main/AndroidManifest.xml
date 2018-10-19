@@ -2,15 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.devaction.mylocation">
 
-    <!--uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="27" /-->
-    <!-- because of https://commonsware.com/blog/2017/04/11/android-o-implicit-broadcast-ban.html -->
-    <!-- "Android O and the Implicit Broadcast Ban" -->
-    <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="25" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-feature android:name="android.hardware.location.gps" />
 
