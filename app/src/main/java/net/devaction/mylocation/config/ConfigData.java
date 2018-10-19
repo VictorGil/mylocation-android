@@ -8,7 +8,7 @@ package net.devaction.mylocation.config;
 public class ConfigData{
     private static ConfigData INSTANCE = null;
 
-    // example value could be "http://192.168.0.2:8091/api/locationdata"
+    // example value could be "http://192.168.0.101:8091/api/locationdata"
     private String locationDataRemoteUrl;
 
     public static ConfigData getInstance(){
