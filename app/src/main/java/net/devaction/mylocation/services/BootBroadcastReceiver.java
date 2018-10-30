@@ -24,7 +24,13 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
         scheduleJob(context);
     }
 
-    static void scheduleJob(Context context){
+    //We are getting "W/BroadcastQueue: Permission Denial: receiving Intent
+    // { act=android.intent.action.PHONE_STATE flg=0x1000010 (has extras) } to
+    // ProcessRecord{...} (pid=6607, uid=5013) requires android.permission.READ_PRIVILEGED_PHONE_STATE
+    // due to sender android (uid 1000)" message, so we are going to schedule the service
+    //when the application starts
+
+    public static void scheduleJob(Context context){
 
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
         JobInfo jobInfo = jobScheduler.getPendingJob(JOB_ID);

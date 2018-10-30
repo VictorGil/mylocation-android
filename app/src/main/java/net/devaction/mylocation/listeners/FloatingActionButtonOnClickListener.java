@@ -1,6 +1,7 @@
 package net.devaction.mylocation.listeners;
 
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,7 @@ import net.devaction.mylocation.db.LocationServiceController;
 import net.devaction.mylocation.db.OnOrOff;
 import static net.devaction.mylocation.db.OnOrOff.ON;
 import net.devaction.mylocation.MainActivity;
+import net.devaction.mylocation.processors.LocationDataProcessor;
 
 /**
  * @author Víctor Gil
@@ -35,7 +37,10 @@ public class FloatingActionButtonOnClickListener implements OnClickListener{
         OnOrOff onOrOff = LocationServiceController.switchOnOrOff(view.getContext());
         if (onOrOff == ON){
             toastMessageResourceId = R.string.service_has_been_enabled;
+            Log.i(this.getClass().getSimpleName(),"Location service has been enabled");
             mainActivity.changeFloatingButtonIconToStop();
+            Log.i(this.getClass().getSimpleName(),"Going to send the current location data");
+            LocationDataProcessor.process(mainActivity.getApplicationContext());
         }
         else {
             toastMessageResourceId = R.string.service_has_been_disabled;
