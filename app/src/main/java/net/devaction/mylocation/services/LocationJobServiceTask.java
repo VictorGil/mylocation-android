@@ -13,18 +13,11 @@ import net.devaction.mylocation.serialization.PojoToJsonStringSerializer;
  * since June 2018
  */
 public class LocationJobServiceTask extends AsyncTask<JobParameters, Void, JobParameters>{
-    private final LocationJobService locationJobService;
+    private final byte[] keyStoreBytes;
     private final LocationData locationData;
 
-    //this is used when it is not submitted by the LocationJobService
-    //but by a button on the UI for example
-    public LocationJobServiceTask(LocationData locationData) {
-        this.locationJobService = null;
-        this.locationData = locationData;
-    }
-
-    public LocationJobServiceTask(LocationJobService jobService, LocationData locationData) {
-        this.locationJobService = jobService;
+    public LocationJobServiceTask(byte[] keyStoreBytes, LocationData locationData) {
+        this.keyStoreBytes =  keyStoreBytes;
         this.locationData = locationData;
     }
 
@@ -33,7 +26,7 @@ public class LocationJobServiceTask extends AsyncTask<JobParameters, Void, JobPa
         String locationDataJsonString = PojoToJsonStringSerializer.serialize(locationData);
         Log.d("mylocation." + this.getClass().getSimpleName(), "LocationData JSON string: " + locationDataJsonString);
         if (locationDataJsonString != null)
-            HttpClient.send(locationDataJsonString);
+            HttpClient.send(locationDataJsonString, keyStoreBytes);
 
         if (jobParametersArray[0] == null)
             return null;
@@ -43,12 +36,6 @@ public class LocationJobServiceTask extends AsyncTask<JobParameters, Void, JobPa
 
     @Override
     protected void onPostExecute(JobParameters jobParameters){
-        if (locationJobService != null && jobParameters != null){
-            Log.d("mylocation." + this.getClass().getSimpleName(), "Job with id " +
-                    jobParameters.getJobId() + " finished");
-            locationJobService.jobFinished(jobParameters, false);
-        }
-
         Log.d("mylocation." + this.getClass().getSimpleName(), "Task execution finished");
     }
 }

@@ -1,3 +1,4 @@
 {
-    "locationDataRemoteUrl" : "http://192.168.0.101:8091/api/locationdata"
+    "locationDataRemoteUrl": "https://192.168.0.101:8091/api/locationdata",
+    "keyStorePassword": "*****************"
 }

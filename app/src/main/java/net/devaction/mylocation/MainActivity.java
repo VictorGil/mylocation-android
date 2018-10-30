@@ -8,10 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import net.devaction.mylocation.config.ConfigFetcher;
 import net.devaction.mylocation.db.LocationServiceController;
 import net.devaction.mylocation.listeners.FloatingActionButtonOnClickListener;
-import net.devaction.mylocation.processors.LocationDataProcessor;
+import net.devaction.mylocation.services.BootBroadcastReceiver;
 
 /**
  * @author Víctor Gil
@@ -22,16 +21,18 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        ConfigFetcher.fetch(getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //The application service is not able to receive the broadcast message after the phone
+        // has finish booting, so at least we schedule the job once the application starts
+        BootBroadcastReceiver.scheduleJob(getApplicationContext());
+
         if (LocationServiceController.isServiceEnabled(getApplicationContext())){
             changeFloatingButtonIconToStop();
-            LocationDataProcessor.process(getApplicationContext());
         } else
             changeFloatingButtonIconToPlay();
     }

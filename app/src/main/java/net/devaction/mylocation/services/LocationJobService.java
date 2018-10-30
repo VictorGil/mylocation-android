@@ -30,20 +30,6 @@ public class LocationJobService extends JobService{
     public boolean onStartJob(JobParameters locationJobParams){
         Log.i("mylocation.LocationJobService", "Job started");
 
-
-        /*
-        LocationData locationData = LocationDataProcessor.process(this);
-
-        if (locationData == null)
-            //there's no more work to be done for this job
-            return false;
-
-        //This will be run on a different thread because LocationJobServiceTask
-        // extends AsyncTask
-        new LocationJobServiceTask(this, locationData).execute(locationJobParams);
-        //we are doing work in some other thread
-        return true;
-        */
         if (LocationServiceController.isServiceEnabled(this)){
             Log.d(this.getClass().getSimpleName(),
                     "The location service is enabled, going to send the location data");
@@ -62,16 +48,6 @@ public class LocationJobService extends JobService{
     public boolean onStopJob(JobParameters params){
         Log.i("mylocation.LocationJobService", "Job stopped");
         return false;
-    }
-
-    void getCoordinates(){
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ContextCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED){
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            location.getAccuracy();
-        } else{
-            Log.e("mylocation.LocationJobService", "We do not have the permision to retrieve the location");
-        }
     }
 }
 
