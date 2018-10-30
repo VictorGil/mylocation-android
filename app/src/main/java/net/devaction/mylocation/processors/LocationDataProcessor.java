@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import net.devaction.mylocation.api.data.LocationData;
+import net.devaction.mylocation.config.ConfigFetcher;
 import net.devaction.mylocation.services.LocationJobService;
 import net.devaction.mylocation.services.LocationJobServiceTask;
 
@@ -33,6 +34,7 @@ public class LocationDataProcessor{
 
     //it is called by the service
     public static void process(final Context context, final JobParameters jobParameters){
+        ConfigFetcher.fetch(context);
 
         if (ContextCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED){
             FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
