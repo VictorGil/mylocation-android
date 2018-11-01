@@ -27,26 +27,39 @@ public class ConfigFetcher{
         }
 
         InputStream configInputStream = context.getResources().openRawResource(R.raw.config);
+         CONFIG_DATA = readConfigData(configInputStream, context);
+    }
+
+    static ConfigData readConfigData(InputStream configInputStream, Context context){
         ObjectMapper objectMapper = new ObjectMapper();
+        ConfigData configData = null;
+
         try {
-            CONFIG_DATA = objectMapper.readValue(configInputStream, ConfigData.class);
+            configData = objectMapper.readValue(configInputStream, ConfigData.class);
         } catch (IOException ex) {
             Log.wtf(ConfigFetcher.class.getSimpleName(), "Could not read config file", ex);
-            Toast toast = Toast.makeText(context, R.string.could_not_read_config_file, Toast.LENGTH_LONG);
+            final Toast toast = Toast.makeText(context, R.string.could_not_read_config_file, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, -150);
             toast.show();
-            return;
+            return null;
+        } finally{
+            try{
+                configInputStream.close();
+            } catch(IOException ex){
+                Log.e(ConfigFetcher.class.getSimpleName(), "Error when closing the InputStream: " + ex, ex);
+            }
         }
 
-        if (CONFIG_DATA.getLocationDataRemoteUrl() == null || CONFIG_DATA.getLocationDataRemoteUrl().isEmpty()){
+        if (configData.getLocationDataRemoteUrl() == null || configData.getLocationDataRemoteUrl().isEmpty()){
             Log.wtf(ConfigFetcher.class.getSimpleName(),
                     "The value of the remote URL is not set in the configuration file");
-            Toast toast = Toast.makeText(context, R.string.url_missing, Toast.LENGTH_LONG);
+            final Toast toast = Toast.makeText(context, R.string.url_missing, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, -150);
             toast.show();
-            return;
+            return null;
         }
-        Log.d(ConfigFetcher.class.getSimpleName(), "Configuration data has just been read from file: " + CONFIG_DATA);
+        Log.d(ConfigFetcher.class.getSimpleName(), "Configuration data has just been read from file: " + configData);
+        return configData;
     }
 }
 
