@@ -23,6 +23,13 @@ public class LocationDataConstructor{
             return null;
         }
 
+        if (LocationDataShouldBeMaskedChecker.check(location.getLatitude(), location.getLongitude()))
+            return constructMaskedLocationData();
+
+        return constructRegularLocationData(location);
+    }
+
+    static LocationData constructRegularLocationData(Location location){
         LocationData locationData = new LocationData();
 
         locationData.setLatitude(Location.convert(location.getLatitude(), FORMAT_DEGREES));
@@ -41,6 +48,14 @@ public class LocationDataConstructor{
 
         Log.d("mylocation." + LocationDataConstructor.class.getSimpleName(),
                 "LocationData: " + locationData);
+
+        return locationData;
+    }
+
+    static LocationData constructMaskedLocationData(){
+        LocationData locationData = new LocationData();
+        locationData.setLatitude(LocationData.MASKED);
+        locationData.setLongitude(LocationData.MASKED);
 
         return locationData;
     }

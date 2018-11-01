@@ -36,7 +36,7 @@ public class LocationDataProcessor{
         process(context, null);
     }
 
-    //it is called by the service
+    //it may be called by the service or by the UI
     public static void process(final Context context, final JobParameters jobParameters){
         ConfigFetcher.fetch(context);
 
@@ -70,17 +70,24 @@ public class LocationDataProcessor{
         if (locationData == null){
             Log.e("mylocation." + LocationDataProcessor.class.getSimpleName(),
                     "Could not get the current location");
-        } else {
-            JobParameters[] jobParametersArray = new JobParameters[1];
-            jobParametersArray[0] = jobParameters;
-
-            InputStream keyStoreInputStream = context.getResources().openRawResource(R.raw.mylocationkeystore01);
-            byte[] keyStoreBytes =  readBytes(keyStoreInputStream);
-            Log.d(LocationDataProcessor.class.getSimpleName(), "Size of the keyStore in bytes: " + keyStoreBytes.length);
-
-            LocationJobServiceTask locationJobServiceTask = new LocationJobServiceTask(keyStoreBytes, locationData);
-            locationJobServiceTask.execute(jobParametersArray);
+            return;
         }
+
+        if (locationData.getLatitude().equals(LocationData.MASKED)){
+            Log.w("mylocation." + LocationDataProcessor.class.getSimpleName(), "Current locatioon is masked" +
+            ", not going to send it to the backend sever");
+            return;
+        }
+
+        JobParameters[] jobParametersArray = new JobParameters[1];
+        jobParametersArray[0] = jobParameters;
+
+        InputStream keyStoreInputStream = context.getResources().openRawResource(R.raw.mylocationkeystore01);
+        byte[] keyStoreBytes =  readBytes(keyStoreInputStream);
+        Log.d(LocationDataProcessor.class.getSimpleName(), "Size of the keyStore in bytes: " + keyStoreBytes.length);
+
+        LocationJobServiceTask locationJobServiceTask = new LocationJobServiceTask(keyStoreBytes, locationData);
+        locationJobServiceTask.execute(jobParametersArray);
     }
 
     static byte[] readBytes(InputStream inputStream){
