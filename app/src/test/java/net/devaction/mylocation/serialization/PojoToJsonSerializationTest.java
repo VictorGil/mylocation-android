@@ -60,7 +60,7 @@ public class PojoToJsonSerializationTest {
 
         return data;
 
-        //For exmaple: 41.05397, 44.82093 works in Google maps Web UI
+        //For example: 41.05397, 44.82093 works in Google maps Web UI
     }
 }
 
