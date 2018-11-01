@@ -26,7 +26,7 @@ public class ConfigFetcher{
             return;
         }
 
-        InputStream configInputStream = context.getResources().openRawResource(R.raw.config);
+        InputStream configInputStream = context.getResources().openRawResource(R.raw.config_example);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             CONFIG_DATA = objectMapper.readValue(configInputStream, ConfigData.class);
