@@ -1,5 +1,7 @@
 package net.devaction.mylocation.config;
 
+import java.util.Arrays;
+
 /**
  * @author Víctor Gil
  *
@@ -13,6 +15,8 @@ public class ConfigData{
 
     private String keyStorePassword;
 
+    private MaskedArea[] maskedAreas;
+
     public static ConfigData getInstance(){
         return INSTANCE;
     }
@@ -25,7 +29,9 @@ public class ConfigData{
     @Override
     public String toString() {
         return "ConfigData{" +
-                    "locationDataRemoteUrl='" + locationDataRemoteUrl + '\'' +
+                "locationDataRemoteUrl='" + locationDataRemoteUrl + '\'' +
+                ", keyStorePassword='" + keyStorePassword + '\'' +
+                ", maskedAreas=" + Arrays.toString(maskedAreas) +
                 '}';
     }
 
@@ -45,6 +51,14 @@ public class ConfigData{
     //this method is called by com.fasterxml.jackson.databind.ObjectMapper
     public void setKeyStorePassword(String keyStorePassword) {
         this.keyStorePassword = keyStorePassword;
+    }
+
+    public MaskedArea[] getMaskedAreas() {
+        return maskedAreas;
+    }
+
+    public void setMaskedAreas(MaskedArea[] maskedAreas) {
+        this.maskedAreas = maskedAreas;
     }
 }
 
