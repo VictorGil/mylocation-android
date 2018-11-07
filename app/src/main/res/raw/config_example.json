@@ -1,4 +1,7 @@
 {
-    "locationDataRemoteUrl": "https://192.168.0.101:8091/api/locationdata",
-    "keyStorePassword": "*****************"
+    "locationDataRemoteUrl": "https://mylocation.devaction.net:8091/api/locationdata",
+    "keyStorePassword": "*****************",
+    "maskedAreas": [
+        { "minLatitude": "50.091", "maxLatitude": "50.094840", "minLongitude": "14.544022", "maxLongitude": "14.554344"}
+    ]
 }
