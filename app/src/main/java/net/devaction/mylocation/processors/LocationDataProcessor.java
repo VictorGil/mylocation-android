@@ -66,6 +66,7 @@ public class LocationDataProcessor{
 
     static void process(Location location, JobParameters jobParameters, Context context){
         LocationData locationData = LocationDataConstructor.construct(location);
+        Log.i(LocationDataProcessor.class.getSimpleName(), "LocationData: " + locationData);
 
         if (locationData == null){
             Log.e("mylocation." + LocationDataProcessor.class.getSimpleName(),
@@ -74,7 +75,7 @@ public class LocationDataProcessor{
         }
 
         if (locationData.getLatitude().equals(LocationData.MASKED)){
-            Log.w("mylocation." + LocationDataProcessor.class.getSimpleName(), "Current locatioon is masked" +
+            Log.w("mylocation." + LocationDataProcessor.class.getSimpleName(), "Current location is masked" +
             ", not going to send it to the backend sever");
             return;
         }
