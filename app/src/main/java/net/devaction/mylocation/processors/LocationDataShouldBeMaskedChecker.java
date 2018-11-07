@@ -19,21 +19,23 @@ public class LocationDataShouldBeMaskedChecker{
     }
 
     static boolean check(final BigDecimal latitude, final BigDecimal longitude){
-        //I am aware that this is not nice, I plan to switch to using Dependency Injection (Dagger 2)
+        //I am aware that this is not pretty, I plan to switch to using Dependency Injection (Dagger 2)
         //in the future
         final MaskedArea[] maskedAreas = ConfigData.getInstance().getMaskedAreas();
+
         return check(latitude, longitude, maskedAreas);
     }
 
     static boolean check(final BigDecimal latitude, final BigDecimal longitude, final MaskedArea[] maskedAreas){
 
         for (int i = 0; i < maskedAreas.length; i++){
-            if (check(latitude, longitude, maskedAreas[i]))
-                Log.d(LocationDataShouldBeMaskedChecker.class.getSimpleName(), "Current location is in a masked area");
+            if (check(latitude, longitude, maskedAreas[i])){
+                Log.i(LocationDataShouldBeMaskedChecker.class.getSimpleName(), "Current location is in a masked area");
                 return true;
+            }
         }
 
-        Log.d(LocationDataShouldBeMaskedChecker.class.getSimpleName(), "Current location must not be masked");
+        Log.i(LocationDataShouldBeMaskedChecker.class.getSimpleName(), "Current location must not be masked");
         return false;
     }
 
