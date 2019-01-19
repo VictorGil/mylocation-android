@@ -34,10 +34,7 @@ public class HttpClient{
         Log.d("mylocation.HttpClient","Going to send JSON string: " + jsonString +
                 "\nRemote URL: " + url);
 
-        SSLSocketFactory sslSocketFactory = SslSocketFactoryCreator.create(keyStoreBytes, keyStorePassword);
-
-        //TO DO: use a different method because sslSocketFactory(sslSocketFactory) is deprecated
-        OkHttpClient client = new OkHttpClient.Builder().sslSocketFactory(sslSocketFactory).hostnameVerifier(
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().hostnameVerifier(
                 new HostnameVerifier() {
                     @Override
                     public boolean verify(String hostname, SSLSession session){
@@ -47,8 +44,17 @@ public class HttpClient{
                         return true;
                     }
                 }
-        ).build();
+        );
 
+        if (url.contains("https")){
+            //we configure/enable SSL HTTP (HTTPS)
+            SSLSocketFactory sslSocketFactory = SslSocketFactoryCreator.create(keyStoreBytes,
+                    keyStorePassword);
+            //TO DO: use a different method because sslSocketFactory(sslSocketFactory) is deprecated
+            clientBuilder = clientBuilder.sslSocketFactory(sslSocketFactory);
+        }
+
+        OkHttpClient client = clientBuilder.build();
 
         Request request = buildRequest(url, jsonString);
         Response response = null;
